@@ -25,14 +25,17 @@ def handle_urls(str_url, dict_int_urls):
 		dict_int_urls[str_url] += 1
 
 def handle_hashtags(str_hashtag, dict_int_hashtags):
-	str_hashtag = "#" + remove_punctuation(str_hashtag) 
-	dict_int_hashtags[str_hashtag] += 1
+	str_hashtag = remove_punctuation(str_hashtag)
+	if str_hashtag is not None:
+		str_hashtag = "#" + str_hashtag.lower()
+		dict_int_hashtags[str_hashtag] += 1
 
 def handle_words(str_word, dict_int_words):
-	lower_case_word = str_word.lower()
-	clean_word = remove_punctuation(lower_case_word)
-	if clean_word not in stopwords:
-		dict_int_words[clean_word] += 1
+	str_word = remove_punctuation(str_word)
+	if str_word is not None:
+		lower_case_word = str_word.lower()
+		if lower_case_word not in CUSTOMIZED_STOPWORDS:
+			dict_int_words[lower_case_word] += 1
 
 # reads the words in the post and decides what to do with them		
 def read_post_text(post_text, dict_int_words, dict_int_hashtags):
